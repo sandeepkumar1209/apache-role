@@ -1,0 +1,5 @@
+---
+- name: Apache Roles Playbook
+  hosts: prod
+  roles:
+          - role: /home/ansible/Ansible/roles/apache

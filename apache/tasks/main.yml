@@ -1,0 +1,25 @@
+---
+# tasks file for apache
+- name: Installing all required packages
+  yum:
+          name: "{{ item }}"
+          state: present
+  loop: "{{ pkgs }}"
+
+- name: Creating index.html file from ansible jinja2 template
+  template:
+          src: index.j2
+          dest: /var/www/html/index.html
+- name: Starting and Enabling the Services
+  service:
+          name: "{{ item }}"
+          state: started
+          enabled: yes
+  loop: "{{ pkgs }}"
+- name: Managing firewall rules
+  firewalld:
+          service: "{{ item }}"
+          permanent: yes
+          immediate: yes
+          state: enabled
+  loop: "{{ rule }}"
